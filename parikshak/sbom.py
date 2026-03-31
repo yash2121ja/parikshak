@@ -1,8 +1,8 @@
 """SBOM generation — CycloneDX and SPDX output."""
 
 from datetime import datetime, timezone
-from dscanner import __version__
-from dscanner.scanner import _extract_image, _detect_packages, _detect_distro
+from parikshak import __version__
+from parikshak.scanner import _extract_image, _detect_packages, _detect_distro
 import shutil
 
 

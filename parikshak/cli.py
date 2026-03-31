@@ -10,10 +10,10 @@ from rich.table import Table
 from rich.panel import Panel
 from rich import box
 
-from dscanner import __version__
-from dscanner.scanner import scan_image
-from dscanner.db import update_db, get_db_stats
-from dscanner.sbom import generate_sbom
+from parikshak import __version__
+from parikshak.scanner import scan_image
+from parikshak.db import update_db, get_db_stats
+from parikshak.sbom import generate_sbom
 
 console = Console()
 

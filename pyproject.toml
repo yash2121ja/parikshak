@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "parikshak"
-version = "1.0.0"
+version = "1.0.1"
 description = "Parikshak — Fast Docker image vulnerability scanner. Finds CVEs, secrets, and misconfigurations."
 readme = "README.md"
 license = "Apache-2.0"
@@ -34,7 +34,7 @@ dependencies = [
 dev = ["pytest", "ruff"]
 
 [project.scripts]
-parikshak = "dscanner.cli:main"
+parikshak = "parikshak.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/yash2121ja/parikshak"
@@ -42,4 +42,4 @@ Repository = "https://github.com/yash2121ja/parikshak"
 Issues = "https://github.com/yash2121ja/parikshak/issues"
 
 [tool.setuptools.packages.find]
-include = ["dscanner*"]
+include = ["parikshak*"]
