@@ -27,9 +27,9 @@ SEV_COLORS = {
 
 
 @click.group()
-@click.version_option(__version__, prog_name="dscanner")
+@click.version_option(__version__, prog_name="parikshak")
 def main():
-    """dscanner — Fast Docker image vulnerability scanner."""
+    """Parikshak — Fast Docker image vulnerability scanner."""
     pass
 
 
@@ -54,7 +54,7 @@ def scan(image, fmt, severity, exit_code, secrets, misconfig, scan_all, offline,
     sev_filter = set(severity.upper().split(",")) if severity else set()
 
     if not quiet:
-        console.print(f"\n  [bold]dscanner[/bold] v{__version__} — scanning [cyan]{image}[/cyan]\n")
+        console.print(f"\n  [bold]parikshak[/bold] v{__version__} — scanning [cyan]{image}[/cyan]\n")
 
     auth = {"username": username, "password": password} if username else None
 
@@ -222,7 +222,7 @@ def _to_sarif(image, vulns):
         "runs": [{
             "tool": {
                 "driver": {
-                    "name": "dscanner",
+                    "name": "parikshak",
                     "version": __version__,
                     "informationUri": "https://github.com/yourorg/dscanner",
                     "rules": rules,

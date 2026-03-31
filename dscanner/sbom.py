@@ -37,7 +37,7 @@ def _cyclonedx(image, packages, distro):
         "version": 1,
         "metadata": {
             "timestamp": datetime.now(timezone.utc).isoformat(),
-            "tools": [{"vendor": "dscanner", "name": "dscanner", "version": __version__}],
+            "tools": [{"vendor": "parikshak", "name": "parikshak", "version": __version__}],
             "component": {"type": "container", "name": image},
         },
         "components": components,
@@ -66,7 +66,7 @@ def _spdx(image, packages, distro):
         "name": image,
         "creationInfo": {
             "created": datetime.now(timezone.utc).isoformat(),
-            "creators": [f"Tool: dscanner-{__version__}"],
+            "creators": [f"Tool: parikshak-{__version__}"],
         },
         "packages": spdx_packages,
     }

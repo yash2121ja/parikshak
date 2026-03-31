@@ -3,22 +3,21 @@ requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "dscanner"
+name = "parikshak"
 version = "1.0.0"
-description = "Fast Docker image vulnerability scanner — finds CVEs, secrets, and misconfigurations"
+description = "Parikshak — Fast Docker image vulnerability scanner. Finds CVEs, secrets, and misconfigurations."
 readme = "README.md"
-license = {text = "Apache-2.0"}
+license = "Apache-2.0"
 requires-python = ">=3.10"
 authors = [
-    {name = "Docker Scanner Team"},
+    {name = "Yash Dhakad"},
 ]
-keywords = ["docker", "security", "vulnerability", "scanner", "container", "cve", "sbom"]
+keywords = ["docker", "security", "vulnerability", "scanner", "container", "cve", "sbom", "parikshak"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Console",
     "Intended Audience :: Developers",
     "Intended Audience :: System Administrators",
-    "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Topic :: Security",
@@ -35,13 +34,12 @@ dependencies = [
 dev = ["pytest", "ruff"]
 
 [project.scripts]
-dscanner = "dscanner.cli:main"
+parikshak = "dscanner.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/yourorg/dscanner"
-Documentation = "https://github.com/yourorg/dscanner#readme"
-Repository = "https://github.com/yourorg/dscanner"
-Issues = "https://github.com/yourorg/dscanner/issues"
+Homepage = "https://github.com/yash2121ja/parikshak"
+Repository = "https://github.com/yash2121ja/parikshak"
+Issues = "https://github.com/yash2121ja/parikshak/issues"
 
 [tool.setuptools.packages.find]
 include = ["dscanner*"]

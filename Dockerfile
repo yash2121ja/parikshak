@@ -11,5 +11,5 @@ COPY . /app
 WORKDIR /app
 RUN pip install --no-cache-dir .
 
-ENTRYPOINT ["dscanner"]
+ENTRYPOINT ["parikshak"]
 CMD ["--help"]

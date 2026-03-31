@@ -1,23 +1,24 @@
-# dscanner
+# Parikshak
 
 Fast Docker image vulnerability scanner. Finds CVEs, secrets, and misconfigurations.
 
-```
-pip install dscanner
-dscanner scan nginx:latest
+```bash
+pip install parikshak
+parikshak scan nginx:latest
 ```
 
 ## What It Does
 
 ```
-$ dscanner scan python:3.12-slim
+$ parikshak scan python:3.12-slim
 
-  dscanner v1.0.0 — scanning python:3.12-slim
+  parikshak v1.0.0 — scanning python:3.12-slim
 
-  Detecting packages...     88 packages found (320ms)
-  Matching advisories...    12 vulnerabilities (45ms)
-  Scanning secrets...       0 secrets (180ms)
-  Checking misconfigs...    3 issues (25ms)
+  Extracting image...      done (1200ms)
+  Detecting packages...    88 packages (45ms)
+  Matching advisories...   12 vulnerabilities (700ms)
+  Scanning secrets...      0 secrets (180ms)
+  Checking misconfigs...   3 issues (25ms)
 
   ┌─────────────────────────────────────────────────────────────┐
   │  RESULTS: python:3.12-slim                                  │
@@ -25,94 +26,60 @@ $ dscanner scan python:3.12-slim
   │  CRIT  │  HIGH  │  MED   │  LOW   │ TOTAL  │ Secrets/Misc  │
   │   0    │   6    │   8    │   74   │  88    │   0 / 3       │
   └────────┴────────┴────────┴────────┴────────┴───────────────┘
-
-  CVE-2026-2673    HIGH    openssl     3.5.5-1~deb13u1    unfixed
-  CVE-2026-29111   HIGH    libudev1    257.9-1~deb13u1    unfixed
-  CVE-2025-69720   HIGH    ncurses     6.5+20250216-2     unfixed
-  ...
-
-  Full report: dscanner scan python:3.12-slim --format json
 ```
 
 ## Features
 
 - **Fast** — Rust-powered package detection, parallel scanning
-- **Accurate** — Uses distro-specific advisories (like Trivy), not raw NVD
+- **Accurate** — Uses distro-specific advisories (Debian Tracker, Alpine SecDB), not raw NVD
 - **More than CVEs** — Also finds hardcoded secrets and misconfigurations
 - **No daemon needed** — Works without Docker daemon (pulls via registry API)
 - **Offline mode** — Download DB once, scan without internet
 - **CI/CD ready** — Exit code 1 on critical/high findings, JSON/SARIF output
+- **CISA KEV** — Flags actively exploited vulnerabilities
 
 ## Install
 
 ```bash
-pip install dscanner
-
-# Or with Docker
-docker run --rm -v /var/run/docker.sock:/var/run/docker.sock dscanner/dscanner scan nginx:latest
+pip install parikshak
 ```
 
 ## Usage
 
 ```bash
 # Scan an image
-dscanner scan nginx:latest
-dscanner scan python:3.12-slim --severity HIGH,CRITICAL
-dscanner scan myregistry.io/app:v1 --username user --password pass
+parikshak scan nginx:latest
+parikshak scan python:3.12-slim --severity HIGH,CRITICAL
 
 # Output formats
-dscanner scan nginx:latest --format table    # default
-dscanner scan nginx:latest --format json     # machine-readable
-dscanner scan nginx:latest --format sarif    # GitHub/GitLab integration
-dscanner scan nginx:latest --format csv
+parikshak scan nginx:latest --format json
+parikshak scan nginx:latest --format sarif
+parikshak scan nginx:latest --format csv
 
 # CI/CD mode (exit 1 if critical/high found)
-dscanner scan nginx:latest --exit-code 1 --severity CRITICAL,HIGH
+parikshak scan nginx:latest --exit-code 1 --severity CRITICAL,HIGH
 
 # Offline mode
-dscanner db update                           # download DB
-dscanner scan nginx:latest --offline         # scan without internet
-
-# Secret scanning
-dscanner scan nginx:latest --secrets         # include secret detection
-dscanner scan nginx:latest --misconfig       # include misconfiguration checks
-dscanner scan nginx:latest --all             # everything
+parikshak db update
+parikshak scan nginx:latest --offline
 
 # SBOM generation
-dscanner sbom nginx:latest --format cyclonedx
-dscanner sbom nginx:latest --format spdx
+parikshak sbom nginx:latest --format cyclonedx
+parikshak sbom nginx:latest --format spdx
 ```
 
 ## GitHub Actions
 
 ```yaml
-- uses: yourorg/dscanner-action@v1
-  with:
-    image: myapp:${{ github.sha }}
-    severity: CRITICAL,HIGH
-    exit-code: 1
+- name: Scan container image
+  run: |
+    pip install parikshak
+    parikshak scan myapp:${{ github.sha }} --exit-code 1 --severity CRITICAL,HIGH
 ```
-
-## How It Works
-
-1. Pulls image layers from registry (no Docker daemon needed)
-2. Detects OS + language packages from filesystem
-3. Queries **VulnIntel DB** for distro-specific advisories
-4. Optionally scans for secrets and misconfigurations
-5. Reports findings with fix recommendations
 
 ## Advisory Database
 
-Powered by [vuln-intel-db](https://github.com/yourorg/vuln-intel-db) — an open-source vulnerability intelligence database that aggregates:
-
-- Debian Security Tracker
-- Alpine SecDB
-- Red Hat OVAL
-- GitHub Advisory (GHSA)
-- OSV.dev
-- CISA KEV (Known Exploited)
-- EPSS scores
-- NVD
+Powered by [vuln-intel-db](https://github.com/yash2121ja/vuln-intel-db) — aggregates advisories from Debian, Alpine, GHSA, CISA KEV, EPSS. Updated every 6 hours.
 
 ## License
 
